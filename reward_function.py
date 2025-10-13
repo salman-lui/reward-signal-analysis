@@ -119,11 +119,11 @@ def compute_rule_based_score(solution_str, ground_truth):
         
         if DEBUG:
             print("\n" + "="*100)
-            print("🔍 RULE_BASED COMPUTE DEBUG")
+            print("RULE_BASED COMPUTE DEBUG")
             print("="*100)
-            print(f"📝 MODEL RESPONSE:\n{solution_str}")
-            print(f"\n🎯 GROUND TRUTH: {ground_truth}")
-            print(f"\n🏆 FINAL REWARD: {score}")
+            print(f"MODEL RESPONSE:\n{solution_str}")
+            print(f"\nGROUND TRUTH: {ground_truth}")
+            print(f"\nFINAL REWARD: {score}")
             print("="*100 + "\n")
         
         return score
@@ -165,12 +165,12 @@ def compute_score(data_source, solution_str, ground_truth, extra_info):
         
         if DEBUG:
             print("\n" + "="*100)
-            print("🎲 RANDOM_REWARD DEBUG")
+            print("RANDOM_REWARD DEBUG")
             print("="*100)
-            print(f"📝 MODEL RESPONSE:\n{solution_str}")
-            print(f"\n✅ VALIDITY: {'VALID' if format_validity(solution_str) == 1.0 else 'INVALID'}")
-            print(f"\n🎯 GROUND TRUTH: {processed_ground_truth} (ignored)")
-            print(f"\n🏆 FINAL REWARD: {reward_score} (random)")
+            print(f"MODEL RESPONSE:\n{solution_str}")
+            print(f"\nVALIDITY: {'VALID' if format_validity(solution_str) == 1.0 else 'INVALID'}")
+            print(f"\nGROUND TRUTH: {processed_ground_truth} (ignored)")
+            print(f"\nFINAL REWARD: {reward_score} (random)")
             print("="*100 + "\n")
         
         return {"score": reward_score, "ground_truth": ground_truth, "reward_method": "RANDOM_REWARD"}
