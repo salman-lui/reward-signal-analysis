@@ -31,20 +31,11 @@ def format_validity(solution_str):
     """
     Check if solution has valid format:
     - Exactly one \\boxed{} or \\\\boxed{}
-    - Exactly one <answer></answer>
-    - Nothing after </answer>
     """
     try:
         boxed_patterns = [r'\\\\boxed\{.*?\}', r'\\boxed\{.*?\}']
         total_boxed = sum(len(re.findall(pattern, solution_str)) for pattern in boxed_patterns)
         if total_boxed != 1:
-            return 0.0
-        
-        answer_count = len(re.findall(r'<answer>.*?</answer>', solution_str, re.DOTALL))
-        if answer_count != 1:
-            return 0.0
-        
-        if re.search(r'</answer>\s*\S', solution_str):
             return 0.0
         
         return 1.0
@@ -54,15 +45,8 @@ def format_validity(solution_str):
 
 
 def extract_valid_answer(solution_str):
-    """Extract the valid portion of answer (up to </answer> tag)."""
-    try:
-        answer_match = re.search(r'(.*</answer>)', solution_str, re.DOTALL)
-        if answer_match:
-            return answer_match.group(1).strip()
-        else:
-            return solution_str
-    except Exception:
-        return solution_str
+    """Extract the valid portion of answer (returns full solution since no answer tags are used)."""
+    return solution_str
 
 
 # =============================================================================
