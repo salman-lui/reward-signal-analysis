@@ -48,6 +48,8 @@ ray_session_*/
 mlflow/
 checkpoints/
 grpo_rollouts/
+outputs/
+test_code/
 *.ckpt
 *.safetensors
 *.bin
