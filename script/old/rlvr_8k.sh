@@ -9,7 +9,8 @@
 # =============================================================================
 #  EASY CONFIGURATION (MODIFY THESE FOR DIFFERENT EXPERIMENTS)
 # =============================================================================
-export DEBUG=${DEBUG:-False}  # Default to False if not set
+export DEBUG=False
+export REWARD_MODEL_TYPE=RULE_BASED  # Options: RULE_BASED, RANDOM_REWARD
 export BASE_MODEL=/local2/salman/model/reward_signal_project/Qwen2.5-Math-1.5B # Path of your base policy model
 
 # Set save directory based on debug mode
@@ -19,7 +20,7 @@ else
 export SAVE_DIR="/local2/salman/reward_signal_results" # Production save directory
 fi
 
-export EXPERIMENT_NAME=llama_3_1_8b_rule_based_8k
+export EXPERIMENT_NAME=qwen2.5_1.5b_rlvr_test
 
 # =============================================================================
 #  TRAINING CONFIGURATION

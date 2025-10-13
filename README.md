@@ -19,21 +19,11 @@ reward-signal-analysis/
 git clone https://github.com/salman-lui/reward-signal-analysis.git
 cd reward-signal-analysis
 
-# Create environment with exact package versions from working setup
-conda env create -f environment.yml -n reward-signal
-conda activate reward-signal
-```
-
-**Option 2: Manual installation (if Option 1 fails):**
-```bash
-git clone https://github.com/salman-lui/reward-signal-analysis.git
-cd reward-signal-analysis
-
 conda create -n reward-signal python=3.11
 conda activate reward-signal
 
-# Install exact working versions
-pip install -r requirements_exact.txt
+# Install VERL with vLLM backend (installs all dependencies)
+pip install -e .[vllm]
 ```
 
 ## Configuration
