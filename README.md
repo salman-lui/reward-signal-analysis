@@ -7,10 +7,10 @@ We're systematically testing **when RL reward signals actually teach models bett
 ```
 reward-signal-analysis/
 ├── verl/                    # VERL RL framework
-├── script/                  # Training scripts
-│   └── llama/              # Llama-3.1-8B configurations
+├── script/old/             # Training scripts
+│   └── rlvr_8k.sh          # GRPO training script
 ├── reward_function.py       # Custom reward function
-├── data/                    # Training/eval datasets (8K samples)
+├── data/                    # Training/eval datasets (8K train + eval sets)
 └── requirements.txt
 ```
 
@@ -27,26 +27,24 @@ pip install -e .
 
 ## Configuration
 
-Set paths in `script/llama/m_family_main_full_rlvr_8k.sh`:
+Edit the top of `script/old/rlvr_8k.sh` to configure your experiment:
 ```bash
-export TRAINING_MODE="MODE1"  # MODE1: debug, MODE2: prod-local, MODE3: cluster
-export BASE_MODEL="/path/to/Llama-3.1-8B-Instruct"
+export DEBUG=False  # True: 1 GPU debug, False: 4 GPU production
+export BASE_MODEL=/local2/salman/model/Llama-3.1-8B-Instruct
+export SAVE_DIR="/local2/salman/reward_signal_results"
+export EXPERIMENT_NAME=llama_3_1_8b_rule_based_8k
 ```
 
 ## Running Training
 
-**Debug mode (single GPU):**
+**Debug mode (1 GPU, small batch):**
 ```bash
-export TRAINING_MODE="MODE1"
-export CUDA_VISIBLE_DEVICES="0"
-bash script/llama/m_family_main_full_rlvr_8k.sh
+DEBUG=True bash script/old/rlvr_8k.sh
 ```
 
-**Production mode (8 GPUs):**
+**Production mode (4 GPUs, batch=64):**
 ```bash
-export TRAINING_MODE="MODE2"
-export CUDA_VISIBLE_DEVICES="0,1,2,3,4,5,6,7"
-bash script/llama/m_family_main_full_rlvr_8k.sh
+DEBUG=False bash script/old/rlvr_8k.sh
 ```
 
 ## Framework
