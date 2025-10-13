@@ -7,12 +7,9 @@ We're systematically testing **when RL reward signals actually teach models bett
 ```
 reward-signal-analysis/
 ├── verl/                    # VERL RL framework
-├── script/old/             # Training scripts
-│   └── rlvr_8k.sh          # GRPO training script
+├── script/                  # Training scripts
 ├── reward_function.py       # Custom reward function
-├── data/old/               # Training/eval datasets
-│   ├── train_novel_hybrid_8k_with_gt.parquet  # 8K training data
-│   └── eval_data/          # AIME 2024/2025, MATH-500, AMC test sets
+├── data/                    # Training/eval datasets
 └── requirements.txt
 ```
 
@@ -39,8 +36,6 @@ export EXPERIMENT_NAME=your_experiment_name  # Add your experiment name
 **Optional:** Modify save directories (auto-set based on DEBUG mode):
 - Debug mode: `/local2/salman/debug_save`
 - Production mode: `/local2/salman/reward_signal_results`
-
-All training/evaluation data is included in `data/old/` (no external dependencies).
 
 ## Running Training
 
