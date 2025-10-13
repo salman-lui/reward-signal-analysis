@@ -9,7 +9,7 @@
 # =============================================================================
 #  EASY CONFIGURATION (MODIFY THESE FOR DIFFERENT EXPERIMENTS)
 # =============================================================================
-export DEBUG=False
+export DEBUG=${DEBUG:-False}  # Can be overridden: DEBUG=True bash script/rlvr_8k.sh
 export REWARD_MODEL_TYPE=RULE_BASED  # Options: RULE_BASED, RANDOM_REWARD
 export BASE_MODEL=/local2/salman/model/reward_signal_project/Qwen2.5-Math-1.5B # Path of your base policy model
 
@@ -51,6 +51,8 @@ CUSTOM_REWARD_PATH="$(pwd)/reward_function.py"
 CHECKPOINT_DIR="$SAVE_DIR/checkpoints/$EXPERIMENT_NAME"
 LOG_FILE="$SAVE_DIR/logs/log_$EXPERIMENT_NAME.log"
 MLFLOW_DIR="$SAVE_DIR/mlflow/${EXPERIMENT_NAME}_ml_flows"
+ROLLOUT_DIR="$SAVE_DIR/rollouts/${EXPERIMENT_NAME}_rollouts/training"
+VALIDATION_DIR="$SAVE_DIR/rollouts/${EXPERIMENT_NAME}_rollouts/validation"
 export MLFLOW_TRACKING_URI=file://$MLFLOW_DIR
 
 if [ "$DEBUG" = "True" ]; then
@@ -87,7 +89,7 @@ GPU_MEMORY_UTILIZATION=0.6
 fi
 
 TOTAL_EPOCHS=15
-SAVE_FREQ=50
+SAVE_FREQ=200
 TEST_FREQ=10
 
 PARAM_OFFLOAD=False
@@ -110,6 +112,8 @@ fi
 mkdir -p $CHECKPOINT_DIR
 mkdir -p "$(dirname $LOG_FILE)"
 mkdir -p $MLFLOW_DIR
+mkdir -p $ROLLOUT_DIR
+mkdir -p $VALIDATION_DIR
 
 python3 -m verl.trainer.main_ppo \
 algorithm.adv_estimator=grpo \
@@ -153,7 +157,9 @@ trainer.n_gpus_per_node=$N_GPUS_PER_NODE \
 trainer.nnodes=1 \
 trainer.save_freq=$SAVE_FREQ \
 trainer.test_freq=$TEST_FREQ \
-trainer.total_epochs=$TOTAL_EPOCHS 2>&1 | tee $LOG_FILE
+trainer.total_epochs=$TOTAL_EPOCHS \
+trainer.rollout_data_dir=$ROLLOUT_DIR \
+trainer.validation_data_dir=$VALIDATION_DIR 2>&1 | tee $LOG_FILE
 
 
 

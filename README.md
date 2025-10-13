@@ -27,6 +27,9 @@ pip install -e .[vllm]
 
 # Install Flash Attention
 pip install flash-attn==2.6.3 --no-build-isolation
+
+# Install additional dependencies
+pip install mlflow math-verify
 ```
 
 ## Configuration
