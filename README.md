@@ -21,7 +21,12 @@ cd reward-signal-analysis
 
 conda create -n reward-signal python=3.11
 conda activate reward-signal
-pip install -e .
+
+# Install with vLLM (required for inference)
+pip install -e .[vllm]
+
+# Or install with SGLang instead
+# pip install -e .[sglang]
 ```
 
 ## Configuration
