@@ -19,22 +19,30 @@ reward-signal-analysis/
 git clone https://github.com/salman-lui/reward-signal-analysis.git
 cd reward-signal-analysis
 
+# Create environment with exact package versions from working setup
+conda env create -f environment.yml -n reward-signal
+conda activate reward-signal
+```
+
+**Option 2: Manual installation (if Option 1 fails):**
+```bash
+git clone https://github.com/salman-lui/reward-signal-analysis.git
+cd reward-signal-analysis
+
 conda create -n reward-signal python=3.11
 conda activate reward-signal
 
-# Install with vLLM (required for inference)
-pip install -e .[vllm]
-
-# Or install with SGLang instead
-# pip install -e .[sglang]
+# Install exact working versions
+pip install -r requirements_exact.txt
 ```
 
 ## Configuration
 
 **Before running, edit `script/old/rlvr_8k.sh`:**
 
-1. **Required:** Set your model and experiment name
+1. **Required:** Set your model, reward type, and experiment name
 ```bash
+export REWARD_MODEL_TYPE=RULE_BASED          # Options: RULE_BASED, RANDOM_REWARD
 export BASE_MODEL=/path/to/your/model        # Add your base model path
 export EXPERIMENT_NAME=your_experiment_name  # Add your experiment name
 ```
