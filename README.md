@@ -24,6 +24,9 @@ conda activate reward-signal
 
 # Install VERL with vLLM backend (installs all dependencies)
 pip install -e .[vllm]
+
+# Install Flash Attention
+pip install flash-attn==2.6.3 --no-build-isolation
 ```
 
 ## Configuration
