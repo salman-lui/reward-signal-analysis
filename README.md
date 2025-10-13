@@ -10,7 +10,9 @@ reward-signal-analysis/
 ├── script/old/             # Training scripts
 │   └── rlvr_8k.sh          # GRPO training script
 ├── reward_function.py       # Custom reward function
-├── data/                    # Training/eval datasets (8K train + eval sets)
+├── data/old/               # Training/eval datasets
+│   ├── train_novel_hybrid_8k_with_gt.parquet  # 8K training data
+│   └── eval_data/          # AIME 2024/2025, MATH-500, AMC test sets
 └── requirements.txt
 ```
 
@@ -27,24 +29,29 @@ pip install -e .
 
 ## Configuration
 
-Edit the top of `script/old/rlvr_8k.sh` to configure your experiment:
+**Before running, edit the top of `script/old/rlvr_8k.sh` to set:**
+
 ```bash
-export DEBUG=False  # True: 1 GPU debug, False: 4 GPU production
-export BASE_MODEL=/local2/salman/model/Llama-3.1-8B-Instruct
-export SAVE_DIR="/local2/salman/reward_signal_results"
-export EXPERIMENT_NAME=llama_3_1_8b_rule_based_8k
+export BASE_MODEL=/path/to/your/model        # Add your base model path
+export EXPERIMENT_NAME=your_experiment_name  # Add your experiment name
 ```
 
+**Optional:** Modify save directories (auto-set based on DEBUG mode):
+- Debug mode: `/local2/salman/debug_save`
+- Production mode: `/local2/salman/reward_signal_results`
+
+All training/evaluation data is included in `data/old/` (no external dependencies).
+
 ## Running Training
+
+**Production mode (4 GPUs, batch=64) - Default:**
+```bash
+bash script/old/rlvr_8k.sh
+```
 
 **Debug mode (1 GPU, small batch):**
 ```bash
 DEBUG=True bash script/old/rlvr_8k.sh
-```
-
-**Production mode (4 GPUs, batch=64):**
-```bash
-DEBUG=False bash script/old/rlvr_8k.sh
 ```
 
 ## Framework

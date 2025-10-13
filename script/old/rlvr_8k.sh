@@ -10,7 +10,7 @@
 #  EASY CONFIGURATION (MODIFY THESE FOR DIFFERENT EXPERIMENTS)
 # =============================================================================
 export DEBUG=False
-export BASE_MODEL=/local2/salman/model/Llama-3.1-8B-Instruct # Path of your base policy model
+export BASE_MODEL=/local2/salman/model/reward_signal_project/Qwen2.5-Math-1.5B # Path of your base policy model
 
 # Set save directory based on debug mode
 if [ "$DEBUG" = "True" ]; then
@@ -36,14 +36,14 @@ N_GPUS_PER_NODE=4
 fi
 
 if [ "$DEBUG" = "True" ]; then
-TRAIN_DATA_PATH="$(pwd)/data/train_novel_hybrid_8k_with_gt.parquet"
-EVAL_DATA_PATH_1="$(pwd)/data/eval_data/aime2024.parquet"
+TRAIN_DATA_PATH="$(pwd)/data/old/train_novel_hybrid_8k_with_gt.parquet"
+EVAL_DATA_PATH_1="$(pwd)/data/old/eval_data/aime2024.parquet"
 else
-TRAIN_DATA_PATH="$(pwd)/data/train_novel_hybrid_8k_with_gt.parquet"
-EVAL_DATA_PATH_1="$(pwd)/data/eval_data/aime2024.parquet"
-EVAL_DATA_PATH_2="$(pwd)/data/eval_data/aime2025.parquet"
-EVAL_DATA_PATH_3="$(pwd)/data/eval_data/math500.parquet"
-EVAL_DATA_PATH_4="$(pwd)/data/eval_data/amc_test.parquet"
+TRAIN_DATA_PATH="$(pwd)/data/old/train_novel_hybrid_8k_with_gt.parquet"
+EVAL_DATA_PATH_1="$(pwd)/data/old/eval_data/aime2024.parquet"
+EVAL_DATA_PATH_2="$(pwd)/data/old/eval_data/aime2025.parquet"
+EVAL_DATA_PATH_3="$(pwd)/data/old/eval_data/math500.parquet"
+EVAL_DATA_PATH_4="$(pwd)/data/old/eval_data/amc_test.parquet"
 fi
 
 CUSTOM_REWARD_PATH="$(pwd)/reward_function.py"
