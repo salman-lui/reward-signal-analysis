@@ -26,14 +26,22 @@ pip install -e .
 
 ## Configuration
 
-**Before running, edit the top of `script/old/rlvr_8k.sh` to set:**
+**Before running, edit `script/old/rlvr_8k.sh`:**
 
+1. **Required:** Set your model and experiment name
 ```bash
 export BASE_MODEL=/path/to/your/model        # Add your base model path
 export EXPERIMENT_NAME=your_experiment_name  # Add your experiment name
 ```
 
-**Optional:** Modify save directories (auto-set based on DEBUG mode):
+2. **For different domains:** Change train/eval data paths
+```bash
+TRAIN_DATA_PATH="$(pwd)/data/your_domain/train.parquet"
+EVAL_DATA_PATH_1="$(pwd)/data/your_domain/eval/test1.parquet"
+# Add more eval paths as needed
+```
+
+3. **Optional:** Modify save directories (auto-set based on DEBUG mode)
 - Debug mode: `/local2/salman/debug_save`
 - Production mode: `/local2/salman/reward_signal_results`
 
