@@ -9,7 +9,7 @@
 # =============================================================================
 #  EASY CONFIGURATION (MODIFY THESE FOR DIFFERENT EXPERIMENTS)
 # =============================================================================
-export DEBUG=False
+export DEBUG=${DEBUG:-False}  # Default to False if not set
 export BASE_MODEL=/local2/salman/model/reward_signal_project/Qwen2.5-Math-1.5B # Path of your base policy model
 
 # Set save directory based on debug mode
