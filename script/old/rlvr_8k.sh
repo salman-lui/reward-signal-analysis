@@ -10,8 +10,15 @@
 #  EASY CONFIGURATION (MODIFY THESE FOR DIFFERENT EXPERIMENTS)
 # =============================================================================
 export DEBUG=False
-export BASE_MODEL=/local2/salman/model/Llama-3.1-8B-Instruct
-export SAVE_DIR="/local2/salman/reward_signal_results"
+export BASE_MODEL=/local2/salman/model/Llama-3.1-8B-Instruct # Path of your base policy model
+
+# Set save directory based on debug mode
+if [ "$DEBUG" = "True" ]; then
+export SAVE_DIR="/local2/salman/debug_save" # Debug save directory
+else
+export SAVE_DIR="/local2/salman/reward_signal_results" # Production save directory
+fi
+
 export EXPERIMENT_NAME=llama_3_1_8b_rule_based_8k
 
 # =============================================================================
