@@ -36,11 +36,15 @@ pip install mlflow math-verify
 
 **Before running, edit `script/old/rlvr_8k.sh`:**
 
-1. **Required:** Set your model, reward type, and experiment name
+1. **Required:** Set your model, reward type, experiment name, and save directories
 ```bash
 export REWARD_MODEL_TYPE=RULE_BASED          # Options: RULE_BASED, RANDOM_REWARD
 export BASE_MODEL=/path/to/your/model        # Add your base model path
 export EXPERIMENT_NAME=your_experiment_name  # Add your experiment name
+
+# Change save directories (lines 18 and 20):
+# Debug mode:      export SAVE_DIR="/your/debug/save/path"
+# Production mode: export SAVE_DIR="/your/production/save/path"
 ```
 
 2. **For different domains:** Change train/eval data paths
@@ -49,10 +53,6 @@ TRAIN_DATA_PATH="$(pwd)/data/your_domain/train.parquet"
 EVAL_DATA_PATH_1="$(pwd)/data/your_domain/eval/test1.parquet"
 # Add more eval paths as needed
 ```
-
-3. **Optional:** Modify save directories (auto-set based on DEBUG mode)
-- Debug mode: `/local2/salman/debug_save`
-- Production mode: `/local2/salman/reward_signal_results`
 
 ## Running Training
 
