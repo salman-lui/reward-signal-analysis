@@ -6,7 +6,7 @@ We're systematically testing **when RL reward signals actually teach models bett
 
 ```
 reward-signal-analysis/
-├── verl/                    # VERL RL framework (GRPO/PPO training)
+├── verl/                    # VERL RL framework
 ├── script/                  # Training scripts
 │   └── llama/              # Llama-3.1-8B configurations
 ├── reward_function.py       # Custom reward function
@@ -20,7 +20,7 @@ reward-signal-analysis/
 git clone https://github.com/salman-lui/reward-signal-analysis.git
 cd reward-signal-analysis
 
-conda create -n reward-signal python=3.10
+conda create -n reward-signal python=3.11
 conda activate reward-signal
 pip install -e .
 ```
