@@ -68,104 +68,82 @@ DEBUG=True bash script/data_effect/qwen_data_effect.sh
 
 ## Part 1: Data Scale Effects
 
+Full experimental details: [Hybrid Reward Document](https://docs.google.com/document/d/18asovJnrXA19ENS-YmS0-JopuGVjCCGncw_9K-DxHRw/edit?usp=sharing)
+
 ### Objective
-Test the effect of training data quantity on RL learning signals. Specifically: does small-scale data (100-2000 samples) provide sufficient signal for effective learning across different model families and domains?
+Test if small-scale data (64-2000 samples) provides sufficient signal for RL learning across model families and domains.
 
-### Experimental Setup
+### Setup
 
-**Models:**
-- Qwen2.5-Math-1.5B (math-specialized)
-- Qwen2.5-3B (general)
-- Llama3.2-3B-Instruct (general)
+**Models:** Qwen2.5-Math-1.5B, Qwen2.5-3B, Llama3.2-3B-Instruct
 
-**Domains:**
-- Math (Skywork-OR1-RL-Data)
-- Science (SCP-25K)
-- Graph (Reasoning Gym)
-- Logic (Reasoning Gym)
+**Domains:** Math (Skywork-OR1-RL-Data), Science (SCP-25K), Graph (Reasoning Gym)
 
-**Data Sizes:** 100, 500, 1000, 2000 samples
+**Data Sizes:** 64, 100, 500, 1000, 2000 samples
 
-**Total Runs:** 36 (9 model-domain pairs × 4 data sizes)
+**Total Runs:** 45 (9 model-domain pairs × 5 data sizes)
 
-### Running Experiments
+### Configuration
 
-#### For Qwen Models
-Use script: `script/data_effect/qwen_data_effect.sh`
+Edit `script/data_effect/qwen_data_effect.sh` (Qwen) or `script/data_effect/llama_data_effect.sh` (Llama):
 
-#### For Llama Models
-Use script: `script/data_effect/llama_data_effect.sh`
-
-### Configuration Steps
-
-**1. Set Base Model Path (line 14):**
+**1. Base Model (line 14):**
 ```bash
-# For Qwen
-export BASE_MODEL=/local2/salman/model/reward_signal_project/Qwen2.5-Math-1.5B
-
-# For Llama
-export BASE_MODEL=/local2/salman/model/reward_signal_project/Llama-3.2-3B-Instruct
+export BASE_MODEL=/path/to/your/model
 ```
 
-**2. Set Save Directory (line 20):**
+**2. Save Directory (line 20):**
 ```bash
-export SAVE_DIR="/local2/salman/reward_signal_results/data_effect/qwen"
-# or
-export SAVE_DIR="/local2/salman/reward_signal_results/data_effect/llama"
+export SAVE_DIR="/path/to/save/results"
 ```
 
-**3. Set Experiment Name (line 23):**
+**3. Experiment Name (line 23):**
 ```bash
-export EXPERIMENT_NAME=qwen_data_100
-# Change for each run: qwen_data_100, qwen_data_500, llama_data_1000, etc.
+export EXPERIMENT_NAME=your_unique_experiment_name
 ```
 
-**4. Set Training Epochs (line 25):**
+**4. Training Epochs (line 25):**
 ```bash
-# Match epochs to sample size:
-TOTAL_EPOCHS=496  # for 64 or 100 samples
-TOTAL_EPOCHS=71   # for 500 samples
-TOTAL_EPOCHS=32   # for 1000 samples
-TOTAL_EPOCHS=16   # for 2000 samples
+TOTAL_EPOCHS=496  # 64/100 samples
+TOTAL_EPOCHS=71   # 500 samples
+TOTAL_EPOCHS=32   # 1000 samples
+TOTAL_EPOCHS=16   # 2000 samples
 ```
 
-**5. Set GPUs (line 39):**
+**5. GPUs (line 39):**
 ```bash
-export CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES:-"0,1,2,3"}
-# Change GPU IDs as needed: "0,1,2,3" or "4,5,6,7"
+export CUDA_VISIBLE_DEVICES="0,1,2,3"
 ```
 
-**6. Set Training Data Path (line 49 for production, line 45 for debug):**
+**6. Training Data (line 49):**
 ```bash
-# For Qwen models:
-TRAIN_DATA_PATH="$(pwd)/data/math/train/qwen-1-5b/qwen_sky_math_100.parquet"
-# Available: qwen_sky_math_{64,100,500,1000,2000}.parquet
-
-# For Llama models:
-TRAIN_DATA_PATH="$(pwd)/data/math/train/llama-3b/qwen_sky_math_100.parquet"
-# Available: qwen_sky_math_{64,100,500,1000,2000}.parquet
+TRAIN_DATA_PATH="$(pwd)/data/math/train/qwen-1-5b/qwen_sky_math_100.parquet" # for qwen 100 sample
 ```
 
-### Execution
+Available training data:
+- Qwen: `data/math/train/qwen-1-5b/qwen_sky_math_{64,100,500,1000,2000}.parquet`
+- Llama: `data/math/train/llama-3b/qwen_sky_math_{64,100,500,1000,2000}.parquet`
+
+### Evaluation Data
+
+All experiments use the same evaluation benchmarks (configured in lines 50-56):
+
+```
+data/math/eval_data/
+├── aime2024.parquet                    # AIME 2024
+├── aime2025.parquet                    # AIME 2025
+├── math500.parquet                     # MATH-500
+├── amc_test.parquet                    # AMC Test
+├── scp_test_difficult_1.parquet        # SCP Difficult
+├── scp_test_very_difficult_0.parquet   # SCP Very Difficult
+└── scp_test_medium_2_8.parquet         # SCP Medium
+```
+
+### Run
 
 ```bash
 bash script/data_effect/qwen_data_effect.sh
-# or
-bash script/data_effect/llama_data_effect.sh
 ```
-
-### Data Locations
-
-Training data:
-- Qwen: `data/math/train/qwen-1-5b/`
-- Llama: `data/math/train/llama-3b/`
-
-Evaluation data (shared):
-- AIME 2024: `data/math/eval_data/aime2024.parquet`
-- AIME 2025: `data/math/eval_data/aime2025.parquet`
-- MATH-500: `data/math/eval_data/math500.parquet`
-- AMC Test: `data/math/eval_data/amc_test.parquet`
-- SCP Tests: `data/math/eval_data/scp_test_{difficult,medium,very_difficult}_*.parquet`
 
 ---
 
