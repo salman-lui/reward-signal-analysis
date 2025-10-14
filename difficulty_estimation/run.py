@@ -11,8 +11,6 @@ from pathlib import Path
 import pandas as pd
 from ast import literal_eval
 from verl.utils.reward_score import math_verify
-HF_TOKEN = "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"
-os.environ["HF_TOKEN"] = HF_TOKEN
 
 # Import eval functions
 current_dir = Path(__file__).resolve().parent
