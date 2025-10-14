@@ -48,11 +48,11 @@ EVAL_DATA_PATH_4="$(pwd)/data/old/eval_data/amc_test.parquet"
 fi
 
 CUSTOM_REWARD_PATH="$(pwd)/reward_function.py"
-CHECKPOINT_DIR="$SAVE_DIR/checkpoints/$EXPERIMENT_NAME"
-LOG_FILE="$SAVE_DIR/logs/log_$EXPERIMENT_NAME.log"
-MLFLOW_DIR="$SAVE_DIR/mlflow/${EXPERIMENT_NAME}_ml_flows"
-ROLLOUT_DIR="$SAVE_DIR/rollouts/${EXPERIMENT_NAME}_rollouts/training"
-VALIDATION_DIR="$SAVE_DIR/rollouts/${EXPERIMENT_NAME}_rollouts/validation"
+CHECKPOINT_DIR="$SAVE_DIR/$EXPERIMENT_NAME/checkpoints"
+LOG_FILE="$SAVE_DIR/$EXPERIMENT_NAME/logs/log_$EXPERIMENT_NAME.log"
+MLFLOW_DIR="$SAVE_DIR/$EXPERIMENT_NAME/mlflow"
+ROLLOUT_DIR="$SAVE_DIR/$EXPERIMENT_NAME/rollouts/training"
+VALIDATION_DIR="$SAVE_DIR/$EXPERIMENT_NAME/rollouts/validation"
 export MLFLOW_TRACKING_URI=file://$MLFLOW_DIR
 
 if [ "$DEBUG" = "True" ]; then
