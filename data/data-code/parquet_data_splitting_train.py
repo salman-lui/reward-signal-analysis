@@ -21,9 +21,9 @@ from pathlib import Path
 
 # Configuration
 INPUT_PATH = "/home/salman/reward-signal-analysis/difficulty_estimation/datasets_with_difficulty/train_novel_hybrid_8k_with_gt_with_difficulty.parquet"
-OUTPUT_DIR = "/home/salman/reward-signal-analysis/test_code/data_salman/math/train/qwen-1-5b"
-MODEL = "Qwen2.5-Math-1.5B"
-SAMPLE_SIZES = [64, 100, 150, 250, 500, 1000, 1500, 2000, 3000]
+OUTPUT_DIR = "/home/salman/reward-signal-analysis/test_code/data_salman/math/train_v2/llama-3b"
+MODEL = "Llama-3.2-3B-Instruct"
+SAMPLE_SIZES = [64, 128, 256, 512, 1024, 2048, 4096]
 DIFFICULTY_RANGE = range(1, 16)  # 1 to 15
 
 # Load data with duckdb
