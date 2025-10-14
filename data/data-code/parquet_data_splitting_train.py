@@ -102,7 +102,7 @@ for size in SAMPLE_SIZES:
     sampled_df = df.loc[all_indices].reset_index(drop=True)
     
     # Save using duckdb
-    output_file = os.path.join(OUTPUT_DIR, f"qwen_sky_math_{len(all_indices)}.parquet")
+    output_file = os.path.join(OUTPUT_DIR, f"llama_sky_math_{len(all_indices)}.parquet")
     conn.execute(f"COPY (SELECT * FROM sampled_df) TO '{output_file}' (FORMAT PARQUET)")
     print(f"\nSaved {len(all_indices)} samples -> {output_file}")
     
