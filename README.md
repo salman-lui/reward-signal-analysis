@@ -58,12 +58,12 @@ EVAL_DATA_PATH_1="$(pwd)/data/your_domain/eval/test1.parquet"
 
 **Production mode (4 GPUs, batch=64) - Default:**
 ```bash
-bash script/old/rlvr_8k.sh
+bash script/data_effect/qwen_data_effect.sh
 ```
 
 **Debug mode (1 GPU, small batch):**
 ```bash
-DEBUG=True bash script/old/rlvr_8k.sh
+DEBUG=True bash script/data_effect/qwen_data_effect.sh
 ```
 
 ## Framework

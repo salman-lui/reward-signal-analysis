@@ -17,10 +17,14 @@ export BASE_MODEL=/local2/salman/model/reward_signal_project/Qwen2.5-Math-1.5B #
 if [ "$DEBUG" = "True" ]; then
 export SAVE_DIR="/local2/salman/debug_save" # Debug save directory
 else
-export SAVE_DIR="/local2/salman/reward_signal_results" # Production save directory
+export SAVE_DIR="/local2/salman/reward_signal_results/data_effect/qwen" # Production save directory
 fi
 
-export EXPERIMENT_NAME=qwen2.5_1.5b_rlvr_test
+export EXPERIMENT_NAME=qwen_data_100
+
+TOTAL_EPOCHS=496
+SAVE_FREQ=50
+TEST_FREQ=20
 
 # =============================================================================
 #  TRAINING CONFIGURATION
@@ -33,19 +37,23 @@ N_GPUS_PER_NODE=1
 else
 export VLLM_ATTENTION_BACKEND=XFORMERS
 export CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES:-"0,1,2,3"}
+# export CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES:-"4,5,6,7"}
 N_GPUS_PER_NODE=4
 fi
 
 if [ "$DEBUG" = "True" ]; then
-TRAIN_DATA_PATH="$(pwd)/data/old/train_novel_hybrid_8k_with_gt.parquet"
+TRAIN_DATA_PATH="$(pwd)/data/math/train/qwen-1-5b/qwen_sky_math_100.parquet"
 EVAL_DATA_PATH_1="$(pwd)/data/math/eval_data/scp_test_medium_2_8.parquet"
-# EVAL_DATA_PATH_2="$(pwd)/data/old/eval_data/aime2024.parquet"
+EVAL_DATA_PATH_2="$(pwd)/data/math/eval_data/aime2024.parquet"
 else
-TRAIN_DATA_PATH="$(pwd)/data/old/train_novel_hybrid_8k_with_gt.parquet"
-EVAL_DATA_PATH_1="$(pwd)/data/old/eval_data/aime2024.parquet"
-EVAL_DATA_PATH_2="$(pwd)/data/old/eval_data/aime2025.parquet"
-EVAL_DATA_PATH_3="$(pwd)/data/old/eval_data/math500.parquet"
-EVAL_DATA_PATH_4="$(pwd)/data/old/eval_data/amc_test.parquet"
+TRAIN_DATA_PATH="$(pwd)/data/math/train/qwen-1-5b/qwen_sky_math_100.parquet"
+EVAL_DATA_PATH_1="$(pwd)/data/math/eval_data/aime2024.parquet"
+EVAL_DATA_PATH_2="$(pwd)/data/math/eval_data/aime2025.parquet"
+EVAL_DATA_PATH_3="$(pwd)/data/math/eval_data/math500.parquet"
+EVAL_DATA_PATH_4="$(pwd)/data/math/eval_data/amc_test.parquet"
+EVAL_DATA_PATH_5="$(pwd)/data/math/eval_data/scp_test_difficult_1.parquet"
+EVAL_DATA_PATH_6="$(pwd)/data/math/eval_data/scp_test_very_difficult_0.parquet"
+EVAL_DATA_PATH_7="$(pwd)/data/math/eval_data/scp_test_medium_2_8.parquet"
 fi
 
 CUSTOM_REWARD_PATH="$(pwd)/reward_function.py"
@@ -89,9 +97,6 @@ TENSOR_MODEL_PARALLEL_SIZE=2
 GPU_MEMORY_UTILIZATION=0.6
 fi
 
-TOTAL_EPOCHS=15
-SAVE_FREQ=200
-TEST_FREQ=10
 
 PARAM_OFFLOAD=False
 OPTIMIZER_OFFLOAD=False
@@ -105,9 +110,11 @@ ENABLE_GRADIENT_CHECKPOINTING=True
 # =============================================================================
 train_files="$TRAIN_DATA_PATH"
 if [ "$DEBUG" = "True" ]; then
-test_files="['$EVAL_DATA_PATH_1']"
+# test_files="['$EVAL_DATA_PATH_1']"
+test_files="['$EVAL_DATA_PATH_1','$EVAL_DATA_PATH_2']"
 else
-test_files="['$EVAL_DATA_PATH_1','$EVAL_DATA_PATH_2','$EVAL_DATA_PATH_3','$EVAL_DATA_PATH_4']"
+test_files="['$EVAL_DATA_PATH_1','$EVAL_DATA_PATH_2','$EVAL_DATA_PATH_3','$EVAL_DATA_PATH_4','$EVAL_DATA_PATH_5','$EVAL_DATA_PATH_6','$EVAL_DATA_PATH_7']"
+# test_files="['$EVAL_DATA_PATH_1','$EVAL_DATA_PATH_2','$EVAL_DATA_PATH_3','$EVAL_DATA_PATH_4']"
 fi
 
 mkdir -p $CHECKPOINT_DIR
