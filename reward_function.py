@@ -197,7 +197,12 @@ def compute_score_batch(data_sources, solution_strs, ground_truths, extra_infos)
     # RANDOM_REWARD: Format validation + Random 50/50 scoring for TRAINING, RULE_BASED for VALIDATION
     if REWARD_MODEL_TYPE == 'RANDOM_REWARD':
         # Check if this is validation data
-        validation_patterns = ['test-math-aime24', 'test-math-aime25', 'huggingfaceh4/math-500', 'test-math-', 'test-amc', 'test-scp']
+        validation_patterns = [
+            'test-math-aime24', 'test-math-aime25', 'huggingfaceh4/math-500', 
+            'test-math-', 'test-amc', 'test-scp',
+            'stem__gpqa', 'stem__supergpqa',  # STEM eval datasets
+            'logic__arcagi', 'logic__zebra_puzzle'  # Logic eval datasets
+        ]
         is_validation_batch = any(
             any(pattern in str(data_source).lower() for pattern in validation_patterns)
             for data_source in data_sources
