@@ -29,14 +29,14 @@ from pathlib import Path
 # OUTPUT_DIR = "/home/salman/reward-signal-analysis/test_code/data_salman/math/train_v2/llama-3b"
 # OUTPUT_PREFIX = "llama_sky_math"
 
-# FOR SCP DATASET - LLAMA: (CURRENTLY ACTIVE - Updated dataset without "Show that"/"Prove that")
-INPUT_PATH = "/home/salman/reward-signal-analysis/difficulty_estimation/datasets_with_difficulty/scp_updated_8620_with_difficulty.parquet"
+# FOR SCP DATASET - LLAMA: (CURRENTLY ACTIVE - Merged filtered dataset 15,033 records)
+INPUT_PATH = "/home/salman/reward-signal-analysis/difficulty_estimation/datasets_with_difficulty/scp_merged_filtered_with_difficulty_17199.parquet"
 OUTPUT_DIR = "/home/salman/reward-signal-analysis/test_code/data_salman/scp/train/llama-3b"
 OUTPUT_PREFIX = "llama_scp"
 MODEL = "Llama-3.2-3B-Instruct"
 
 # FOR SCP DATASET - QWEN:
-# INPUT_PATH = "/home/salman/reward-signal-analysis/difficulty_estimation/datasets_with_difficulty/scp_updated_8620_with_difficulty.parquet"
+# INPUT_PATH = "/home/salman/reward-signal-analysis/difficulty_estimation/datasets_with_difficulty/scp_merged_filtered_with_difficulty_17199.parquet"
 # OUTPUT_DIR = "/home/salman/reward-signal-analysis/test_code/data_salman/scp/train/qwen-3b"
 # OUTPUT_PREFIX = "qwen_scp"
 # MODEL = "Qwen2.5-3B"
