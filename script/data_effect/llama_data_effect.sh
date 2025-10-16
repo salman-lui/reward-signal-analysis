@@ -19,9 +19,9 @@ else
 export SAVE_DIR="/local2/salman/reward_signal_results/data_effect/llama" # Production save directory # CHANGE THIS 
 fi
 
-export EXPERIMENT_NAME=llama_data_64 # CHANGE THIS NAME
+export EXPERIMENT_NAME=llama_data_128 # CHANGE THIS NAME
 
-TOTAL_EPOCHS=496 # CHANGE THIS (496 for 64/100, 71 for 500, 32 for 1000, 16 for 2000)
+TOTAL_EPOCHS=248 # CHANGE THIS (496 for 64/100, 71 for 500, 32 for 1000, 16 for 2000)
 SAVE_FREQ=50
 TEST_FREQ=20
 
@@ -37,17 +37,17 @@ export CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES:-"0"}
 N_GPUS_PER_NODE=1
 else
 export VLLM_ATTENTION_BACKEND=XFORMERS
-export CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES:-"0,1,2,3"} # CHANGE THIS if using different GPUs
-# export CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES:-"4,5,6,7"}
+# export CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES:-"0,1,2,3"} # CHANGE THIS if using different GPUs
+export CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES:-"4,5,6,7"}
 N_GPUS_PER_NODE=4
 fi
 
 if [ "$DEBUG" = "True" ]; then
-TRAIN_DATA_PATH="$(pwd)/data/math/train/llama-3b/qwen_sky_math_64.parquet"
+TRAIN_DATA_PATH="$(pwd)/data/math/train/llama-3b/llama_sky_math_128.parquet"
 EVAL_DATA_PATH_1="$(pwd)/data/math/eval_data/scp_test_medium_2_8.parquet"
 EVAL_DATA_PATH_2="$(pwd)/data/math/eval_data/aime2024.parquet"
 else
-TRAIN_DATA_PATH="$(pwd)/data/math/train/llama-3b/qwen_sky_math_64.parquet" # CHANGE THIS
+TRAIN_DATA_PATH="$(pwd)/data/math/train/llama-3b/llama_sky_math_128.parquet" # CHANGE THIS
 EVAL_DATA_PATH_1="$(pwd)/data/math/eval_data/aime2024.parquet"
 EVAL_DATA_PATH_2="$(pwd)/data/math/eval_data/aime2025.parquet"
 EVAL_DATA_PATH_3="$(pwd)/data/math/eval_data/math500.parquet"

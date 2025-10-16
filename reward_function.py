@@ -201,7 +201,8 @@ def compute_score_batch(data_sources, solution_strs, ground_truths, extra_infos)
             'test-math-aime24', 'test-math-aime25', 'huggingfaceh4/math-500', 
             'test-math-', 'test-amc', 'test-scp',
             'stem__gpqa', 'stem__supergpqa',  # STEM eval datasets
-            'logic__arcagi', 'logic__zebra_puzzle'  # Logic eval datasets
+            'logic__arcagi', 'logic__zebra_puzzle',  # Logic eval datasets
+            'mmlu_sci', 'stem__mmlu'  # MMLU science eval datasets
         ]
         is_validation_batch = any(
             any(pattern in str(data_source).lower() for pattern in validation_patterns)
