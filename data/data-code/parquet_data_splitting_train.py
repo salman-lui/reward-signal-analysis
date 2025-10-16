@@ -29,17 +29,17 @@ from pathlib import Path
 # OUTPUT_DIR = "/home/salman/reward-signal-analysis/test_code/data_salman/math/train_v2/llama-3b"
 # OUTPUT_PREFIX = "llama_sky_math"
 
-# FOR SCP DATASET - LLAMA:
-# INPUT_PATH = "/home/salman/reward-signal-analysis/difficulty_estimation/datasets_with_difficulty/scp_9920_with_difficulty.parquet"
-# OUTPUT_DIR = "/home/salman/reward-signal-analysis/test_code/data_salman/scp/train/llama-3b"
-# OUTPUT_PREFIX = "llama_scp"
-# MODEL = "Llama-3.2-3B-Instruct"
+# FOR SCP DATASET - LLAMA: (CURRENTLY ACTIVE - Updated dataset without "Show that"/"Prove that")
+INPUT_PATH = "/home/salman/reward-signal-analysis/difficulty_estimation/datasets_with_difficulty/scp_updated_8620_with_difficulty.parquet"
+OUTPUT_DIR = "/home/salman/reward-signal-analysis/test_code/data_salman/scp/train/llama-3b"
+OUTPUT_PREFIX = "llama_scp"
+MODEL = "Llama-3.2-3B-Instruct"
 
 # FOR SCP DATASET - QWEN:
-INPUT_PATH = "/home/salman/reward-signal-analysis/difficulty_estimation/datasets_with_difficulty/scp_9920_with_difficulty.parquet"
-OUTPUT_DIR = "/home/salman/reward-signal-analysis/test_code/data_salman/scp/train/qwen-3b"
-OUTPUT_PREFIX = "qwen_scp"
-MODEL = "Qwen2.5-3B"
+# INPUT_PATH = "/home/salman/reward-signal-analysis/difficulty_estimation/datasets_with_difficulty/scp_updated_8620_with_difficulty.parquet"
+# OUTPUT_DIR = "/home/salman/reward-signal-analysis/test_code/data_salman/scp/train/qwen-3b"
+# OUTPUT_PREFIX = "qwen_scp"
+# MODEL = "Qwen2.5-3B"
 SAMPLE_SIZES = [8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096]
 DIFFICULTY_RANGE = range(1, 16)  # 1 to 15
 
