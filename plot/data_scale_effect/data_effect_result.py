@@ -30,21 +30,39 @@ Plots generated:
 # CONFIGURATION - CHANGE THESE FOR DIFFERENT RUNS
 # ============================================================================
 # Domain and Model
-TRAINING_DOMAIN = "Math"
-MODEL_NAME = "Qwen2.5-Math-1.5B"
+TRAINING_DOMAIN = "Science(SCP)"
+MODEL_NAME = "Llama-3.2-3B-Instruct"
 
 # Benchmark Names (for plot titles)
 MATH_BENCHMARK_NAME = "Math Benchmark Performance"
 SCP_BENCHMARK_NAME = "SCP Test Set Performance"
 STEM_BENCHMARK_NAME = "STEM Benchmark Performance"
 
-# Experiments to plot (label, base_path)
+
+# # Experiments to plot (label, base_path) for Qwen Math
+# EXPERIMENTS = [
+#     ("64 samples", "/local2/salman/reward_signal_results/data_effect/qwen/qwen_data_64/mlflow/731139593762122798/d7be685f982b4bfbbd041a18ee551f50/metrics"),
+#     ("128 samples", "/local2/salman/reward_signal_results/data_effect/qwen/qwen_data_128/mlflow/433222232317221588/650e9f701be84b878ac1bc5747a59b96/metrics"),
+#     ("512 samples", "/local2/salman/reward_signal_results/data_effect/qwen/qwen_data_512/mlflow/973145789152362639/7f0099b9c2dd45ed83e1815ca18f9f26/metrics"),
+#     ("1024 samples", "/local2/salman/reward_signal_results/data_effect/qwen/qwen_data_1024/mlflow/907235872503953152/9eb3e7be8b814cdb801f98f44c784b22/metrics"),
+#     ("2048 samples", "/local2/salman/reward_signal_results/data_effect/qwen/qwen_data_2048/mlflow/490719113903161021/9d2611303e5d4cfb8b225c9681ac8e6c/metrics")
+# ]
+
+# # Experiments to plot (label, base_path) for Llama Math
+# EXPERIMENTS = [
+#     ("64 samples", "/local2/salman/reward_signal_results/data_effect/llama/llama_data_64/mlflow/184325052765024322/17c418f2c19b449081eeec0df8913786/metrics"),
+#     ("128 samples", "/local2/salman/reward_signal_results/data_effect/llama/llama_data_128/mlflow/599100423772582426/0d0e26a0ec0d484b9aa98faa48994629/metrics"),
+#     ("512 samples", "/local2/salman/reward_signal_results/data_effect/llama/llama_data_512/mlflow/343431917358588485/561906f95e174d089d8768a41a0d189a/metrics"),
+#     ("1024 samples", "/local2/salman/reward_signal_results/data_effect/llama/llama_data_1024/mlflow/261221308158797635/13c80cd5ae8b4a74af1f508b50e710fe/metrics"),
+#     ("2048 samples", "/local2/salman/reward_signal_results/data_effect/llama/llama_data_2048/mlflow/855510272267812287/945f5e3a3249447c92b4202c464c30ad/metrics")
+# ]
+
+# Experiments to plot (label, base_path) for Llama SCP
 EXPERIMENTS = [
-    ("64 samples", "/local2/salman/reward_signal_results/data_effect/qwen/qwen_data_64/mlflow/731139593762122798/d7be685f982b4bfbbd041a18ee551f50/metrics"),
-    ("128 samples", "/local2/salman/reward_signal_results/data_effect/qwen/qwen_data_128/mlflow/433222232317221588/650e9f701be84b878ac1bc5747a59b96/metrics"),
-    ("512 samples", "/local2/salman/reward_signal_results/data_effect/qwen/qwen_data_512/mlflow/973145789152362639/7f0099b9c2dd45ed83e1815ca18f9f26/metrics"),
-    ("1024 samples", "/local2/salman/reward_signal_results/data_effect/qwen/qwen_data_1024/mlflow/907235872503953152/9eb3e7be8b814cdb801f98f44c784b22/metrics"),
-    ("2048 samples", "/local2/salman/reward_signal_results/data_effect/qwen/qwen_data_2048/mlflow/490719113903161021/9d2611303e5d4cfb8b225c9681ac8e6c/metrics")
+    ("64 samples", "/local2/salman/reward_signal_results/data_effect/scp/llama3b/llama_scp_64/mlflow/699028690186535534/d65cc97963374af89a121fa2d1bd25cc/metrics"),
+    ("128 samples", "/local2/salman/reward_signal_results/data_effect/scp/llama3b/llama_scp_128/mlflow/440862638874843127/0abcc31a807a43aaa06d24a869ffb356/metrics"),
+    ("512 samples", "/local2/salman/reward_signal_results/data_effect/scp/llama3b/llama_scp_512/mlflow/851771574621329669/efd6ead5d4da4a1da9a7e72a1b20ff09/metrics"),
+    ("1024 samples", "/local2/salman/reward_signal_results/data_effect/scp/llama3b/llama_scp_1024/mlflow/188901959200617046/65590636728745daa9eb9820c726ebc7/metrics")
 ]
 
 # Output configuration
@@ -139,7 +157,7 @@ def main():
             'grad_norm': (grad_norm_steps, grad_norm_values)
         })
     
-    # Load math benchmark validation metrics
+    # Load math benchmark validation metrics (flexible - only load what's available)
     print("Loading math benchmark metrics...")
     for label, base_path in EXPERIMENTS:
         math500_path = os.path.join(base_path, "val-core/HuggingFaceH4/MATH-500/reward/mean_at_1")
@@ -152,17 +170,17 @@ def main():
         aime24_steps, aime24_values = read_mlflow_metric(aime24_path)
         aime25_steps, aime25_values = read_mlflow_metric(aime25_path)
         
-        if not math500_steps or not amc_steps or not aime24_steps or not aime25_steps:
-            print(f"Warning: Failed to load math benchmark data for {label}")
-            continue
-        
-        math_bench_data.append({
-            'label': label,
-            'math500': (math500_steps, math500_values),
-            'amc': (amc_steps, amc_values),
-            'aime24': (aime24_steps, aime24_values),
-            'aime25': (aime25_steps, aime25_values)
-        })
+        # Only add if at least one benchmark exists
+        if math500_steps or amc_steps or aime24_steps or aime25_steps:
+            math_bench_data.append({
+                'label': label,
+                'math500': (math500_steps, math500_values) if math500_steps else ([], []),
+                'amc': (amc_steps, amc_values) if amc_steps else ([], []),
+                'aime24': (aime24_steps, aime24_values) if aime24_steps else ([], []),
+                'aime25': (aime25_steps, aime25_values) if aime25_steps else ([], [])
+            })
+        else:
+            print(f"Warning: No math benchmark data found for {label}")
     
     # Load SCP test set validation metrics
     print("Loading SCP test set metrics...")
@@ -302,70 +320,48 @@ def main():
         plt.close(fig2)
     
     # ========================================================================
-    # PLOT 3: Math Benchmark Performance (MATH-500, AMC, AIME-24, AIME-25)
+    # PLOT 3: Math Benchmark Performance (flexible - plots only available benchmarks)
     # ========================================================================
     if math_bench_data:
         print("\nCreating math benchmark plot...")
-        fig3, axes3 = plt.subplots(1, 4, figsize=(28, 7))
-        fig3.suptitle(f"{MATH_BENCHMARK_NAME} | {TRAINING_DOMAIN} | {MODEL_NAME}", fontsize=24, fontweight='bold', y=1.02)
         
-        # Plot 3.1: MATH-500
-        ax1 = axes3[0]
-        for i, data in enumerate(math_bench_data):
-            steps, values = data['math500']
-            values_percent = [v * 100 for v in values]  # Convert to percentage
-            ax1.plot(steps, values_percent, color=colors[i], linewidth=3, marker='o', markersize=5, label=data['label'])
-        ax1.set_xlabel('Training Steps', fontsize=18)
-        ax1.set_ylabel('Accuracy (%)', fontsize=18)
-        ax1.set_title('MATH-500', fontsize=20, fontweight='bold')
-        ax1.grid(True, alpha=0.3)
-        ax1.tick_params(axis='both', which='major', labelsize=16)
-        ax1.legend(fontsize=16, loc='best')
+        # Determine which benchmarks are available
+        available_benchmarks = []
+        if any(data['math500'][0] for data in math_bench_data):
+            available_benchmarks.append(('math500', 'MATH-500'))
+        if any(data['amc'][0] for data in math_bench_data):
+            available_benchmarks.append(('amc', 'AMC'))
+        if any(data['aime24'][0] for data in math_bench_data):
+            available_benchmarks.append(('aime24', 'AIME-2024'))
+        if any(data['aime25'][0] for data in math_bench_data):
+            available_benchmarks.append(('aime25', 'AIME-2025'))
         
-        # Plot 3.2: AMC
-        ax2 = axes3[1]
-        for i, data in enumerate(math_bench_data):
-            steps, values = data['amc']
-            values_percent = [v * 100 for v in values]  # Convert to percentage
-            ax2.plot(steps, values_percent, color=colors[i], linewidth=3, marker='o', markersize=5, label=data['label'])
-        ax2.set_xlabel('Training Steps', fontsize=18)
-        ax2.set_ylabel('Accuracy (%)', fontsize=18)
-        ax2.set_title('AMC', fontsize=20, fontweight='bold')
-        ax2.grid(True, alpha=0.3)
-        ax2.tick_params(axis='both', which='major', labelsize=16)
-        ax2.legend(fontsize=16, loc='best')
-        
-        # Plot 3.3: AIME-2024
-        ax3_sub = axes3[2]
-        for i, data in enumerate(math_bench_data):
-            steps, values = data['aime24']
-            values_percent = [v * 100 for v in values]  # Convert to percentage
-            ax3_sub.plot(steps, values_percent, color=colors[i], linewidth=3, marker='o', markersize=5, label=data['label'])
-        ax3_sub.set_xlabel('Training Steps', fontsize=18)
-        ax3_sub.set_ylabel('Accuracy (%)', fontsize=18)
-        ax3_sub.set_title('AIME-2024', fontsize=20, fontweight='bold')
-        ax3_sub.grid(True, alpha=0.3)
-        ax3_sub.tick_params(axis='both', which='major', labelsize=16)
-        ax3_sub.legend(fontsize=16, loc='best')
-        
-        # Plot 3.4: AIME-2025
-        ax4 = axes3[3]
-        for i, data in enumerate(math_bench_data):
-            steps, values = data['aime25']
-            values_percent = [v * 100 for v in values]  # Convert to percentage
-            ax4.plot(steps, values_percent, color=colors[i], linewidth=3, marker='o', markersize=5, label=data['label'])
-        ax4.set_xlabel('Training Steps', fontsize=18)
-        ax4.set_ylabel('Accuracy (%)', fontsize=18)
-        ax4.set_title('AIME-2025', fontsize=20, fontweight='bold')
-        ax4.grid(True, alpha=0.3)
-        ax4.tick_params(axis='both', which='major', labelsize=16)
-        ax4.legend(fontsize=16, loc='best')
-        
-        plt.tight_layout()
-        output_path_math = os.path.join(OUTPUT_DIR, OUTPUT_FILENAME_MATH_BENCH)
-        fig3.savefig(output_path_math, dpi=300, bbox_inches='tight')
-        print(f"Saved math benchmark plot to: {output_path_math}")
-        plt.close(fig3)
+        if available_benchmarks:
+            num_plots = len(available_benchmarks)
+            fig3, axes3 = plt.subplots(1, num_plots, figsize=(7*num_plots, 7))
+            if num_plots == 1:
+                axes3 = [axes3]  # Make it iterable
+            fig3.suptitle(f"{MATH_BENCHMARK_NAME} | {TRAINING_DOMAIN} | {MODEL_NAME}", fontsize=24, fontweight='bold', y=1.02)
+            
+            for idx, (bench_key, bench_title) in enumerate(available_benchmarks):
+                ax = axes3[idx]
+                for i, data in enumerate(math_bench_data):
+                    steps, values = data[bench_key]
+                    if steps:  # Only plot if data exists
+                        values_percent = [v * 100 for v in values]  # Convert to percentage
+                        ax.plot(steps, values_percent, color=colors[i], linewidth=3, marker='o', markersize=5, label=data['label'])
+                ax.set_xlabel('Training Steps', fontsize=18)
+                ax.set_ylabel('Accuracy (%)', fontsize=18)
+                ax.set_title(bench_title, fontsize=20, fontweight='bold')
+                ax.grid(True, alpha=0.3)
+                ax.tick_params(axis='both', which='major', labelsize=16)
+                ax.legend(fontsize=16, loc='best')
+            
+            plt.tight_layout()
+            output_path_math = os.path.join(OUTPUT_DIR, OUTPUT_FILENAME_MATH_BENCH)
+            fig3.savefig(output_path_math, dpi=300, bbox_inches='tight')
+            print(f"Saved math benchmark plot to: {output_path_math}")
+            plt.close(fig3)
     
     # ========================================================================
     # PLOT 4: SCP Test Set Performance (Difficult, Medium, Very Difficult)
