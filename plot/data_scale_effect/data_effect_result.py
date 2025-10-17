@@ -313,7 +313,8 @@ def main():
         ax1 = axes3[0]
         for i, data in enumerate(math_bench_data):
             steps, values = data['math500']
-            ax1.plot(steps, values, color=colors[i], linewidth=3, marker='o', markersize=5, label=data['label'])
+            values_percent = [v * 100 for v in values]  # Convert to percentage
+            ax1.plot(steps, values_percent, color=colors[i], linewidth=3, marker='o', markersize=5, label=data['label'])
         ax1.set_xlabel('Training Steps', fontsize=18)
         ax1.set_ylabel('Accuracy (%)', fontsize=18)
         ax1.set_title('MATH-500', fontsize=20, fontweight='bold')
@@ -325,7 +326,8 @@ def main():
         ax2 = axes3[1]
         for i, data in enumerate(math_bench_data):
             steps, values = data['amc']
-            ax2.plot(steps, values, color=colors[i], linewidth=3, marker='o', markersize=5, label=data['label'])
+            values_percent = [v * 100 for v in values]  # Convert to percentage
+            ax2.plot(steps, values_percent, color=colors[i], linewidth=3, marker='o', markersize=5, label=data['label'])
         ax2.set_xlabel('Training Steps', fontsize=18)
         ax2.set_ylabel('Accuracy (%)', fontsize=18)
         ax2.set_title('AMC', fontsize=20, fontweight='bold')
@@ -337,7 +339,8 @@ def main():
         ax3_sub = axes3[2]
         for i, data in enumerate(math_bench_data):
             steps, values = data['aime24']
-            ax3_sub.plot(steps, values, color=colors[i], linewidth=3, marker='o', markersize=5, label=data['label'])
+            values_percent = [v * 100 for v in values]  # Convert to percentage
+            ax3_sub.plot(steps, values_percent, color=colors[i], linewidth=3, marker='o', markersize=5, label=data['label'])
         ax3_sub.set_xlabel('Training Steps', fontsize=18)
         ax3_sub.set_ylabel('Accuracy (%)', fontsize=18)
         ax3_sub.set_title('AIME-2024', fontsize=20, fontweight='bold')
@@ -349,7 +352,8 @@ def main():
         ax4 = axes3[3]
         for i, data in enumerate(math_bench_data):
             steps, values = data['aime25']
-            ax4.plot(steps, values, color=colors[i], linewidth=3, marker='o', markersize=5, label=data['label'])
+            values_percent = [v * 100 for v in values]  # Convert to percentage
+            ax4.plot(steps, values_percent, color=colors[i], linewidth=3, marker='o', markersize=5, label=data['label'])
         ax4.set_xlabel('Training Steps', fontsize=18)
         ax4.set_ylabel('Accuracy (%)', fontsize=18)
         ax4.set_title('AIME-2025', fontsize=20, fontweight='bold')
@@ -375,7 +379,8 @@ def main():
         ax1 = axes4[0]
         for i, data in enumerate(scp_test_data):
             steps, values = data['difficult']
-            ax1.plot(steps, values, color=colors[i], linewidth=3, marker='o', markersize=5, label=data['label'])
+            values_percent = [v * 100 for v in values]  # Convert to percentage
+            ax1.plot(steps, values_percent, color=colors[i], linewidth=3, marker='o', markersize=5, label=data['label'])
         ax1.set_xlabel('Training Steps', fontsize=18)
         ax1.set_ylabel('Accuracy (%)', fontsize=18)
         ax1.set_title('SCP-Difficult', fontsize=20, fontweight='bold')
@@ -387,7 +392,8 @@ def main():
         ax2 = axes4[1]
         for i, data in enumerate(scp_test_data):
             steps, values = data['medium']
-            ax2.plot(steps, values, color=colors[i], linewidth=3, marker='o', markersize=5, label=data['label'])
+            values_percent = [v * 100 for v in values]  # Convert to percentage
+            ax2.plot(steps, values_percent, color=colors[i], linewidth=3, marker='o', markersize=5, label=data['label'])
         ax2.set_xlabel('Training Steps', fontsize=18)
         ax2.set_ylabel('Accuracy (%)', fontsize=18)
         ax2.set_title('SCP-Medium', fontsize=20, fontweight='bold')
@@ -399,7 +405,8 @@ def main():
         ax3 = axes4[2]
         for i, data in enumerate(scp_test_data):
             steps, values = data['very_difficult']
-            ax3.plot(steps, values, color=colors[i], linewidth=3, marker='o', markersize=5, label=data['label'])
+            values_percent = [v * 100 for v in values]  # Convert to percentage
+            ax3.plot(steps, values_percent, color=colors[i], linewidth=3, marker='o', markersize=5, label=data['label'])
         ax3.set_xlabel('Training Steps', fontsize=18)
         ax3.set_ylabel('Accuracy (%)', fontsize=18)
         ax3.set_title('SCP-Very-Difficult', fontsize=20, fontweight='bold')
@@ -426,7 +433,8 @@ def main():
         for i, data in enumerate(stem_bench_data):
             steps, values = data['supergpqa']
             if steps:  # Only plot if data exists
-                ax1.plot(steps, values, color=colors[i], linewidth=3, marker='o', markersize=5, label=data['label'])
+                values_percent = [v * 100 for v in values]  # Convert to percentage
+                ax1.plot(steps, values_percent, color=colors[i], linewidth=3, marker='o', markersize=5, label=data['label'])
         ax1.set_xlabel('Training Steps', fontsize=18)
         ax1.set_ylabel('Accuracy (%)', fontsize=18)
         ax1.set_title('SuperGPQA', fontsize=20, fontweight='bold')
@@ -439,7 +447,8 @@ def main():
         for i, data in enumerate(stem_bench_data):
             steps, values = data['gpqa']
             if steps:  # Only plot if data exists
-                ax2.plot(steps, values, color=colors[i], linewidth=3, marker='o', markersize=5, label=data['label'])
+                values_percent = [v * 100 for v in values]  # Convert to percentage
+                ax2.plot(steps, values_percent, color=colors[i], linewidth=3, marker='o', markersize=5, label=data['label'])
         ax2.set_xlabel('Training Steps', fontsize=18)
         ax2.set_ylabel('Accuracy (%)', fontsize=18)
         ax2.set_title('GPQA Diamond', fontsize=20, fontweight='bold')
@@ -452,7 +461,8 @@ def main():
         for i, data in enumerate(stem_bench_data):
             steps, values = data['mmlu']
             if steps:  # Only plot if data exists
-                ax3.plot(steps, values, color=colors[i], linewidth=3, marker='o', markersize=5, label=data['label'])
+                values_percent = [v * 100 for v in values]  # Convert to percentage
+                ax3.plot(steps, values_percent, color=colors[i], linewidth=3, marker='o', markersize=5, label=data['label'])
         ax3.set_xlabel('Training Steps', fontsize=18)
         ax3.set_ylabel('Accuracy (%)', fontsize=18)
         ax3.set_title('MMLU Science', fontsize=20, fontweight='bold')
