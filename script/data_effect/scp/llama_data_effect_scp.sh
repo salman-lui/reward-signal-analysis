@@ -20,10 +20,10 @@ else
 export SAVE_DIR="/local2/salman/reward_signal_results/data_effect/scp/llama3b" # CHANGE THIS
 fi
 
-export EXPERIMENT_NAME=llama_scp_64 # CHANGE THIS
+export EXPERIMENT_NAME=llama_scp_2048 # CHANGE THIS
 
-TOTAL_EPOCHS=496 # CHANGE THIS (496 for 64, 248 for 128, 124 for 256, 62 for 512, 31 for 1024, 15 for 2048) 
-SAVE_FREQ=50
+TOTAL_EPOCHS=15 # CHANGE THIS (496 for 64, 248 for 128, 124 for 256, 62 for 512, 31 for 1024, 15 for 2048) 
+SAVE_FREQ=100
 TEST_FREQ=20
 
 # =============================================================================
@@ -42,11 +42,11 @@ N_GPUS_PER_NODE=4
 fi
 
 if [ "$DEBUG" = "True" ]; then
-TRAIN_DATA_PATH="$(pwd)/data/scp/train/llama-3b/llama_scp_64.parquet"
+TRAIN_DATA_PATH="$(pwd)/data/scp/train/llama-3b/llama_scp_2048.parquet"
 EVAL_DATA_PATH_1="$(pwd)/data/scp/eval_data/stem__gpqa_diamond_198.parquet"
 # EVAL_DATA_PATH_2="$(pwd)/data/scp/eval_data/aime2024.parquet"
 else
-TRAIN_DATA_PATH="$(pwd)/data/scp/train/llama-3b/llama_scp_64.parquet" # CHANGE THIS
+TRAIN_DATA_PATH="$(pwd)/data/scp/train/llama-3b/llama_scp_2048.parquet" # CHANGE THIS
 EVAL_DATA_PATH_1="$(pwd)/data/scp/eval_data/aime2024.parquet"
 EVAL_DATA_PATH_2="$(pwd)/data/scp/eval_data/math500.parquet"
 EVAL_DATA_PATH_3="$(pwd)/data/scp/eval_data/scp_test_difficult_1.parquet"

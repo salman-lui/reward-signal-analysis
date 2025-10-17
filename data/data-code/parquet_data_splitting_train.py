@@ -30,17 +30,22 @@ from pathlib import Path
 # OUTPUT_PREFIX = "llama_sky_math"
 
 # FOR SCP DATASET - LLAMA: (CURRENTLY ACTIVE - Merged filtered dataset 15,033 records)
-INPUT_PATH = "/home/salman/reward-signal-analysis/difficulty_estimation/datasets_with_difficulty/scp_merged_filtered_with_difficulty_17199.parquet"
-OUTPUT_DIR = "/home/salman/reward-signal-analysis/test_code/data_salman/scp/train/llama-3b"
-OUTPUT_PREFIX = "llama_scp"
+INPUT_PATH = "/home/salman/reward-signal-analysis/data/math/train/llama-3b/llama_sky_math_64.parquet"
+OUTPUT_DIR = "/home/salman/reward-signal-analysis/data/math/train/llama-3b"
+OUTPUT_PREFIX = "llama_sky_math"
 MODEL = "Llama-3.2-3B-Instruct"
+# MODEL = "Qwen2.5-Math-1.5B"
+
+# MODEL = "Qwen2.5-3B"
+
 
 # FOR SCP DATASET - QWEN:
 # INPUT_PATH = "/home/salman/reward-signal-analysis/difficulty_estimation/datasets_with_difficulty/scp_merged_filtered_with_difficulty_17199.parquet"
 # OUTPUT_DIR = "/home/salman/reward-signal-analysis/test_code/data_salman/scp/train/qwen-3b"
 # OUTPUT_PREFIX = "qwen_scp"
 # MODEL = "Qwen2.5-3B"
-SAMPLE_SIZES = [8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096]
+# SAMPLE_SIZES = [8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096]
+SAMPLE_SIZES = [8, 16, 32]
 DIFFICULTY_RANGE = range(1, 16)  # 1 to 15
 
 # ============================================================================

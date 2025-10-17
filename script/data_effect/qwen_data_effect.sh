@@ -20,10 +20,10 @@ else
 export SAVE_DIR="/local2/salman/reward_signal_results/data_effect/qwen" # CHANGE THIS
 fi
 
-export EXPERIMENT_NAME=qwen_data_2048 # CHANGE THIS
+export EXPERIMENT_NAME=qwen_data_8 # CHANGE THIS
 
-TOTAL_EPOCHS=15 # CHANGE THIS (496 for 64, 248 for 128, 62 for 512, 31 for 1024, 15 for 2048) 
-SAVE_FREQ=50
+TOTAL_EPOCHS=496 # CHANGE THIS (496 for 64, 248 for 128, 62 for 512, 31 for 1024, 15 for 2048) 
+SAVE_FREQ=100
 TEST_FREQ=20
 
 # =============================================================================
@@ -36,17 +36,17 @@ export CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES:-"0"}
 N_GPUS_PER_NODE=1
 else
 export VLLM_ATTENTION_BACKEND=XFORMERS
-export CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES:-"0,1,2,3"} # CHANGE THIS if using different GPUs
-# export CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES:-"4,5,6,7"}
+# export CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES:-"0,1,2,3"} # CHANGE THIS if using different GPUs
+export CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES:-"4,5,6,7"}
 N_GPUS_PER_NODE=4
 fi
 
 if [ "$DEBUG" = "True" ]; then
-TRAIN_DATA_PATH="$(pwd)/data/math/train/qwen-1-5b/qwen_sky_math_2048.parquet"
+TRAIN_DATA_PATH="$(pwd)/data/math/train/qwen-1-5b/qwen_sky_math_8_upsample.parquet"
 EVAL_DATA_PATH_1="$(pwd)/data/math/eval_data/scp_test_medium_2_8.parquet"
 EVAL_DATA_PATH_2="$(pwd)/data/math/eval_data/aime2024.parquet"
 else
-TRAIN_DATA_PATH="$(pwd)/data/math/train/qwen-1-5b/qwen_sky_math_2048.parquet" # CHANGE THIS
+TRAIN_DATA_PATH="$(pwd)/data/math/train/qwen-1-5b/qwen_sky_math_8_upsample.parquet" # CHANGE THIS
 EVAL_DATA_PATH_1="$(pwd)/data/math/eval_data/aime2024.parquet"
 EVAL_DATA_PATH_2="$(pwd)/data/math/eval_data/aime2025.parquet"
 EVAL_DATA_PATH_3="$(pwd)/data/math/eval_data/math500.parquet"
